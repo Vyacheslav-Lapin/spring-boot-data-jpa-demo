@@ -1,4 +1,4 @@
-package ru.vlapin.experiments.springbootstartersdemo;
+package ru.vlapin.experiments.springbootdatajpademo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

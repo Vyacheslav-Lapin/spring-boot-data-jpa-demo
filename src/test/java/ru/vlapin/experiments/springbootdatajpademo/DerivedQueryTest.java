@@ -1,4 +1,4 @@
-package ru.vlapin.experiments.springbootstartersdemo;
+package ru.vlapin.experiments.springbootdatajpademo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import ru.vlapin.experiments.springbootstartersdemo.dao.FlightRepository;
-import ru.vlapin.experiments.springbootstartersdemo.model.Flight;
+import ru.vlapin.experiments.springbootdatajpademo.dao.FlightRepository;
+import ru.vlapin.experiments.springbootdatajpademo.model.Flight;
 
 @DataJpaTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -30,9 +30,9 @@ public class DerivedQueryTest {
   @SneakyThrows
   @DisplayName("Should find flights from London")
   void shouldFindFlightsFromLondonTest() {
-    Flight flight1 = createFlight("London");
-    Flight flight2 = createFlight("London");
-    Flight flight3 = createFlight("New York");
+    var flight1 = Flight.builder().origin("London").build();
+    var flight2 = Flight.builder().origin("London").build();
+    var flight3 = Flight.builder().origin("New York").build();
 
     flightRepository.save(flight1);
     flightRepository.save(flight2);
@@ -52,9 +52,9 @@ public class DerivedQueryTest {
   @SneakyThrows
   @DisplayName("Should find flights from London to Paris")
   void shouldFindFlightsFromLondonToParisTest() {
-    Flight flight1 = createFlight("London", "Paris");
-    Flight flight2 = createFlight("Paris", "Madrid");
-    Flight flight3 = createFlight("Amsterdam", "Paris");
+    var flight1 = Flight.builder().origin("London").destination("Paris").build();
+    var flight2 = Flight.builder().origin("Paris").destination("Madrid").build();
+    var flight3 = Flight.builder().origin("Amsterdam").destination("Paris").build();
 
     flightRepository.save(flight1);
     flightRepository.save(flight2);
@@ -72,9 +72,9 @@ public class DerivedQueryTest {
   @SneakyThrows
   @DisplayName("Should find flights from London or Madrid")
   void shouldFindFlightsFromLondonOrMadridTest() {
-    Flight flight1 = createFlight("London", "Paris");
-    Flight flight2 = createFlight("Madrid", "Paris");
-    Flight flight3 = createFlight("Amsterdam", "Paris");
+    var flight1 = Flight.builder().origin("London").destination("Paris").build();
+    var flight2 = Flight.builder().origin("Madrid").destination("Paris").build();
+    var flight3 = Flight.builder().origin("Amsterdam").destination("Paris").build();
 
     flightRepository.save(flight1);
     flightRepository.save(flight2);
@@ -88,17 +88,6 @@ public class DerivedQueryTest {
         .isEqualToComparingFieldByField(flight2);
 
     assertThat(flights.get(0)).isEqualToComparingFieldByField(flight1);
-  }
-
-  public static @NotNull Flight createFlight(@NotNull String origin) {
-    return createFlight(origin, "Amsterdam");
-  }
-
-  public static @NotNull Flight createFlight(@NotNull String origin, @NotNull String destination) {
-    return new Flight()
-               .setOrigin(origin)
-               .setDestination(destination)
-               .setScheduledAt(LocalDateTime.parse("2011-12-13T12:12:00"));
   }
 
 }

@@ -1,4 +1,4 @@
-package ru.vlapin.experiments.springbootstartersdemo.configs;
+package ru.vlapin.experiments.springbootdatajpademo.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -24,7 +24,7 @@ MP=`cat pom.xml | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v /pom:pr
 PA=`cat pom.xml | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v /pom:project/pom:artifactId`
 
 # Maven Version
-MV=3.6.3
+MV=3.6.3_1
 
 # Java Version
 JV=`cat pom.xml | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v /pom:project/pom:properties/pom:java.version`
@@ -47,7 +47,7 @@ init:
 	touch .git/info/exclude
 
 #	maven-wrapper
-	mvn -N io.takari:maven:wrapper -Dmaven=3.6.3
+	mvn -N io.takari:maven:wrapper -Dmaven=$(MV)
 	rm mvnw.cmd
 	chmod +x ./mvnw
 	echo "\n/.mvn\n/mvnw*\n" >> .git/info/exclude
@@ -185,4 +185,3 @@ build-run: update build run
 #		-DinteractiveMode=false
 #
 #	idea ./../monolith-example/pom.xml
-  
